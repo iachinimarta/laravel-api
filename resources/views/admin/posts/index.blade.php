@@ -55,8 +55,6 @@
             </tbody>
         </table>
 
-        <div class="text-center">
-            <button class="btn btn-info text"><a href="{{route('admin.')}}"><-</a></button>
-        </div>
+        <a class="btn btn-info text" href="{{route('admin.')}}"><-</a>
     </div>
 @endsection
