@@ -18,13 +18,20 @@
             @enderror
 
             <div class="mb-4">
-                <label for="selectCategory">Category</label><br>
-                <select name="category_id" id="selectCategory" class="form-control @error('category_id') is-invalid @enderror">
-                    <option {{old('category_id')==''?'selected':''}} value="">-</option>
+                <label for="category_id">Category</label>
+                <select name="category_id" class="form-control @error('category_id') is-invalid @enderror" id="category_id">
+                    <option {{(old('category_id')=="")?'selected':''}} value="">Nessuna categoria</option>
                     @foreach ($categories as $category)
-                        <option {{old('category_id')==$category->id?'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
+                        <option {{(old('category_id')==$category->id)?'selected':''}} value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
+
+                @error('category_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            
             </div>
 
             @error('category_id')

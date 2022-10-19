@@ -1951,11 +1951,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getPosts: function getPosts() {
+    getPosts: function getPosts(page) {
       var _this = this;
 
       this.loading = true;
-      axios.get('api/posts').then(function (response) {
+      axios.get('api/posts', {
+        params: {
+          page: page
+        }
+      }).then(function (response) {
         _this.posts = response.data.results.data;
         _this.loading = false;
         _this.currentPage = response.data.results.current_page;
@@ -2113,66 +2117,50 @@ var render = function render() {
         href: "#"
       }
     }, [_vm._v("Read post")])])]);
-  }), 0), _vm._v(" "), _vm._m(0)]);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("nav", {
-    attrs: {
-      "aria-label": "Page navigation example"
-    }
-  }, [_c("ul", {
+  }), 0), _vm._v(" "), _c("nav", [_c("ul", {
     staticClass: "pagination"
   }, [_c("li", {
-    staticClass: "page-item"
+    staticClass: "page-item",
+    "class": _vm.currentPage == 1 ? "disabled" : ""
   }, [_c("a", {
     staticClass: "page-link",
     attrs: {
       href: "#",
       "aria-label": "Previous"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPosts(_vm.currentPage - 1);
+      }
     }
   }, [_c("span", {
     attrs: {
       "aria-hidden": "true"
     }
   }, [_vm._v("«")])])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
-  }, [_c("a", {
-    staticClass: "page-link",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("1")])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
-  }, [_c("a", {
-    staticClass: "page-link",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("2")])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
-  }, [_c("a", {
-    staticClass: "page-link",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("3")])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
+    staticClass: "page-item page-link"
+  }, [_vm._v(_vm._s(_vm.currentPage + "/" + _vm.lastPage))]), _vm._v(" "), _c("li", {
+    staticClass: "page-item",
+    "class": _vm.currentPage == _vm.lastPage ? "disabled" : ""
   }, [_c("a", {
     staticClass: "page-link",
     attrs: {
       href: "#",
       "aria-label": "Next"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPosts(_vm.currentPage + 1);
+      }
     }
   }, [_c("span", {
     attrs: {
       "aria-hidden": "true"
     }
-  }, [_vm._v("»")])])])])]);
-}];
+  }, [_vm._v("»")])])])])])]);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 

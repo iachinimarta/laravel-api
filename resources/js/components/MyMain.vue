@@ -17,18 +17,16 @@
             </div>
         </div>
 
-        <nav aria-label="Page navigation example">
+        <nav>
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                <li class="page-item" :class="(currentPage==1)?'disabled':''">
+                    <a class="page-link" href="#" aria-label="Previous" @click="getPosts(currentPage - 1)">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                <li class="page-item page-link">{{currentPage+"/"+lastPage}}</li>
+                <li class="page-item" :class="(currentPage==lastPage)?'disabled':''">
+                    <a class="page-link" href="#" aria-label="Next" @click="getPosts(currentPage + 1)">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -49,11 +47,15 @@
             }
         },
         methods: {
-            getPosts() {
+            getPosts(page) {
 
                 this.loading = true;
 
-                axios.get('api/posts')
+                axios.get('api/posts', {
+                    params : {
+                        page: page
+                    }
+                })
                 .then((response) => {
                     this.posts = response.data.results.data;
                     this.loading = false;
